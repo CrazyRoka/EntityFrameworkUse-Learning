@@ -23,7 +23,11 @@ namespace EntityFrameworkCoreUse.ConsoleApp
                 new ShowAllTeamCommand(),
                 new ShowAllFootballerCommand(),
                 new AddTeamCommand(),
-                new AddFootballerCommand()
+                new AddFootballerCommand(),
+                new DeleteTeamCommand(),
+                new DeleteFootballerCommand(),
+                new UpdateTeamCommand(),
+                new UpdateFootballerCommand()
             };
 
             while (true)
@@ -47,6 +51,8 @@ namespace EntityFrameworkCoreUse.ConsoleApp
                 }
 
                 commands[choice - 1].Execute(unitOfWork);
+
+                Console.WriteLine("Press any key to continue");
                 Console.ReadLine();
                 Console.Clear();
             }

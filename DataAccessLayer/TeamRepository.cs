@@ -40,7 +40,8 @@ namespace EntityFrameworkCoreUse.DAL
 
         public void Update(Team team)
         {
-            context.Entry(team).State = EntityState.Modified;
+            var old = context.Team.Find(team.TeamId);
+            context.Entry(old).CurrentValues.SetValues(team);
         }
     }
 }

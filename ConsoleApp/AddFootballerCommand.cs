@@ -27,7 +27,7 @@ namespace EntityFrameworkCoreUse.ConsoleApp
 
         private string ReadLastName()
         {
-            Console.Write("Enter second name: ");
+            Console.Write("Enter last name: ");
             return Console.ReadLine().Trim();
         }
 
@@ -41,7 +41,7 @@ namespace EntityFrameworkCoreUse.ConsoleApp
         {
             unitOfWork.Footballer.Create(footballer);
             unitOfWork.Save();
-            Console.WriteLine("Team successfully created!");
+            Console.WriteLine("Footballer successfully created!");
         }
     }
 }

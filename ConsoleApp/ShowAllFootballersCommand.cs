@@ -12,8 +12,9 @@ namespace EntityFrameworkCoreUse.ConsoleApp
 
         public void Execute(UnitOfWork unitOfWork)
         {
-            Console.WriteLine("Footballer:");
-            foreach(Footballer footballer in unitOfWork.Footballer.GetAll())
+            Console.WriteLine("Footballers:");
+            var footballers = unitOfWork.Footballer.GetAll();
+            foreach (var footballer in footballers)
             {
                 Console.WriteLine(footballer);
             }

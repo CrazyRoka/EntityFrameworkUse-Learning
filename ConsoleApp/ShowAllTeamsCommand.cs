@@ -12,13 +12,14 @@ namespace EntityFrameworkCoreUse.ConsoleApp
 
         public void Execute(UnitOfWork unitOfWork)
         {
-            Console.WriteLine("Teams:");
             PrintTeam(unitOfWork);
         }
 
         private void PrintTeam(UnitOfWork unitOfWork)
         {
-            foreach (Team team in unitOfWork.Team.GetAllWithFootballers())
+            Console.WriteLine("Teams:");
+            var teams = unitOfWork.Team.GetAllWithFootballers();
+            foreach (var team in teams)
             {
                 Console.WriteLine(team);
                 Console.WriteLine($"Team consists of {team.Footballer.Count} players:");

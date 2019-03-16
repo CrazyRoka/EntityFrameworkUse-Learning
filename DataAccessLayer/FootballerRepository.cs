@@ -37,7 +37,8 @@ namespace EntityFrameworkCoreUse.DAL
 
         public void Update(Footballer footballer)
         {
-            context.Entry(footballer).State = EntityState.Modified;
+            var old = context.Footballer.Find(footballer.FootballerId);
+            context.Entry(old).CurrentValues.SetValues(footballer);
         }
     }
 }
