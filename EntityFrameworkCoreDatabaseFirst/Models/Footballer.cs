@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace EntityFrameworkCoreDatabaseFirst.Models
 {
-    public partial class Footballer
+    public partial class Footballer : IIdentity
     {
-        public int FootballerId { get; set; }
+        public int Id { get; set; }
         public int TeamId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -13,6 +13,6 @@ namespace EntityFrameworkCoreDatabaseFirst.Models
         public virtual Team Team { get; set; }
 
         public override string ToString() => $"FirstName: {FirstName}, " +
-            $"LastName: {LastName}, Id: {FootballerId}, TeamId: {TeamId}";
+            $"LastName: {LastName}, Id: {Id}, TeamId: {TeamId}";
     }
 }

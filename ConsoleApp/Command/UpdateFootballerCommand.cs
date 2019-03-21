@@ -16,8 +16,9 @@ namespace EntityFrameworkCoreUse.ConsoleApp
             int teamId = ReadTeamId();
             var newFirstName = ReadFirstName();
             var newLasttName = ReadLastName();
-            var footballer = new Footballer {
-                FootballerId = id,
+            var footballer = new Footballer
+            {
+                Id = id,
                 FirstName = newFirstName,
                 LastName = newLasttName,
                 TeamId = teamId
@@ -54,7 +55,7 @@ namespace EntityFrameworkCoreUse.ConsoleApp
         {
             unitOfWork.Footballer.Update(footballer);
             unitOfWork.Save();
-            Console.WriteLine($"Footballer with id {footballer.FootballerId} was updated");
+            Console.WriteLine($"Footballer with id {footballer.Id} was updated");
         }
     }
 }

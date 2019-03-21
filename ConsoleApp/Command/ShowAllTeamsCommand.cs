@@ -8,7 +8,7 @@ namespace EntityFrameworkCoreUse.ConsoleApp
 {
     class ShowAllTeamCommand : ICommand
     {
-        public string Description => "Show all Team";
+        public string Description => "Show all Teams";
 
         public void Execute(UnitOfWork unitOfWork)
         {

@@ -12,7 +12,10 @@ namespace EntityFrameworkCoreUse.DAL
     {
         private readonly TeamContext context;
 
-        public FootballerRepository(TeamContext context) => this.context = context;
+        public FootballerRepository(TeamContext context)
+        {
+            this.context = context;
+        }
 
         public void Create(Footballer footballer)
         {
@@ -21,7 +24,8 @@ namespace EntityFrameworkCoreUse.DAL
 
         public void Delete(int id)
         {
-            Footballer footballer = context.Footballer.Find(id);
+            Footballer footballer = new Footballer { Id = id };
+            context.DetachLocal(footballer);
             context.Footballer.Remove(footballer);
         }
 
@@ -32,13 +36,13 @@ namespace EntityFrameworkCoreUse.DAL
 
         public IEnumerable<Footballer> GetAll()
         {
-            return context.Footballer.ToList();
+            return context.Footballer;
         }
 
         public void Update(Footballer footballer)
         {
-            var old = context.Footballer.Find(footballer.FootballerId);
-            context.Entry(old).CurrentValues.SetValues(footballer);
+            context.DetachLocal(footballer);
+            context.Footballer.Update(footballer);
         }
     }
 }

@@ -2,6 +2,7 @@
 using EntityFrameworkCoreUse.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 
 namespace EntityFrameworkCoreUse.ConsoleApp
@@ -17,7 +18,7 @@ namespace EntityFrameworkCoreUse.ConsoleApp
 
         public void Start()
         {
-            var unitOfWork = Container.GetService<UnitOfWork>();
+            var unitOfWork = Container.GetRequiredService<UnitOfWork>();
             var commands = new ICommand[]
             {
                 new ShowAllTeamCommand(),
@@ -43,8 +44,7 @@ namespace EntityFrameworkCoreUse.ConsoleApp
                     break;
                 }
 
-                int choice;
-                if(!int.TryParse(input, out choice) || choice > commands.Length || choice < 1)
+                if(!int.TryParse(input, out int choice) || choice > commands.Length || choice < 1)
                 {
                     Console.WriteLine("Invalid choice. Try again");
                     continue;
@@ -73,8 +73,12 @@ namespace EntityFrameworkCoreUse.ConsoleApp
         private void InitializeServices()
         {
             const string ConnectionString = @"Server=(localdb)\MSSQLLocalDB;Database=FootballTeam;Trusted_Connection=True;";
+            var loggerFactory = new LoggerFactory();
+            loggerFactory.AddFile("Logs/queries.txt");
+
             var services = new ServiceCollection();
             services.AddTransient<UnitOfWork>()
+                .AddSingleton(loggerFactory)
                 .AddEntityFrameworkSqlServer()
                 .AddDbContext<TeamContext>(options =>
                     options.UseSqlServer(ConnectionString));

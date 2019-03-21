@@ -1,12 +1,17 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Logging;
 
 namespace EntityFrameworkCoreDatabaseFirst.Models
 {
     public partial class TeamContext : DbContext
     {
-        public TeamContext(DbContextOptions<TeamContext> options) : base(options) {}
+        private LoggerFactory loggerFactory;
+        public TeamContext(DbContextOptions<TeamContext> options, LoggerFactory loggerFactory) : base(options)
+        {
+            this.loggerFactory = loggerFactory;
+        }
 
         public virtual DbSet<Footballer> Footballer { get; set; }
         public virtual DbSet<Team> Team { get; set; }
@@ -17,6 +22,8 @@ namespace EntityFrameworkCoreDatabaseFirst.Models
 
             modelBuilder.Entity<Footballer>(entity =>
             {
+                entity.HasKey(f => f.Id);
+
                 entity.Property(e => e.FirstName)
                     .IsRequired()
                     .HasMaxLength(30)
@@ -34,11 +41,19 @@ namespace EntityFrameworkCoreDatabaseFirst.Models
 
             modelBuilder.Entity<Team>(entity =>
             {
+                entity.HasKey(t => t.Id);
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(30)
                     .IsUnicode(false);
             });
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseLoggerFactory(loggerFactory);
         }
     }
 }

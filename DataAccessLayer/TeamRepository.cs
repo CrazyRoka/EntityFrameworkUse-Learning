@@ -8,9 +8,12 @@ namespace EntityFrameworkCoreUse.DAL
 {
     public class TeamRepository : IRepository<Team>
     {
-        private TeamContext context;
+        private readonly TeamContext context;
 
-        public TeamRepository(TeamContext context) => this.context = context;
+        public TeamRepository(TeamContext context)
+        {
+            this.context = context;
+        }
 
         public void Create(Team team)
         {
@@ -19,7 +22,8 @@ namespace EntityFrameworkCoreUse.DAL
 
         public void Delete(int id)
         {
-            Team team = context.Team.Find(id);
+            Team team = new Team { Id = id };
+            context.DetachLocal(team);
             context.Team.Remove(team);
         }
 
@@ -30,18 +34,18 @@ namespace EntityFrameworkCoreUse.DAL
 
         public IEnumerable<Team> GetAll()
         {
-            return context.Team.ToList();
+            return context.Team;
         }
 
         public IEnumerable<Team> GetAllWithFootballers()
         {
-            return context.Team.Include(t => t.Footballer).ToList();
+            return context.Team.Include(t => t.Footballer);
         }
 
         public void Update(Team team)
         {
-            var old = context.Team.Find(team.TeamId);
-            context.Entry(old).CurrentValues.SetValues(team);
+            context.DetachLocal(team);
+            context.Team.Update(team);
         }
     }
 }

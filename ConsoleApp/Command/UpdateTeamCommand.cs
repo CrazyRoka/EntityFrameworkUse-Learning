@@ -14,7 +14,7 @@ namespace EntityFrameworkCoreUse.ConsoleApp
         {
             int teamId = ReadTeamId();
             var newName = ReadName();
-            var team = new Team { Name = newName, TeamId = teamId };
+            var team = new Team { Name = newName, Id = teamId };
             UpdateTeam(unitOfWork, team);
         }
 
@@ -34,7 +34,7 @@ namespace EntityFrameworkCoreUse.ConsoleApp
         {
             unitOfWork.Team.Update(team);
             unitOfWork.Save();
-            Console.WriteLine($"Team with id {team.TeamId} was updated");
+            Console.WriteLine($"Team with id {team.Id} was updated");
         }
     }
 }
